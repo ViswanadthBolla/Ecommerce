@@ -1,6 +1,6 @@
 namespace Catalog.Application.Responses;
 
-public class BrandResponse
+public class TypesResponse
 {
     public string Id { get; set; }
     public string Name { get; set; }
