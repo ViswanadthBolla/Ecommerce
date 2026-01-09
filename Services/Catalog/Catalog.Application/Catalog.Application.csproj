@@ -10,4 +10,18 @@
     <ProjectReference Include="../Catalog.Core/Catalog.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands/" />
+    <Folder Include="Handlers/" />
+    <Folder Include="Mappers/" />
+    <Folder Include="Queries/" />
+    <Folder Include="Responses/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="16.0.0" />
+    <PackageReference Include="MediatR" Version="14.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.1" />
+  </ItemGroup>
+
 </Project>
