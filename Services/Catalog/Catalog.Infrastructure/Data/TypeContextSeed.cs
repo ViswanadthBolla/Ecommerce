@@ -6,22 +6,17 @@ namespace Catalog.Infrastructure.Data;
 
 public class TypeContextSeed
 {
-    public static void SeedData(IMongoCollection<ProductType> typeCollection)
+    public static async Task SeedData(IMongoCollection<ProductType> typeCollection)
     {
-        bool existTypes = typeCollection.Find(b => true).Any();
-        string path = Path.Combine("Data","SeedData","types.json");
+        bool existTypes = await typeCollection.Find(b => true).AnyAsync();
         if (!existTypes)
         {
-            var typesData = File.ReadAllText(path);
+            var typesData = await File.ReadAllTextAsync("../Catalog.Infrastructure/Data/SeedData/types.json");
             var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
-            if (types != null)
+            if (types != null && types.Count > 0)
             {
-                foreach (var type in types)
-                {
-                    typeCollection.InsertOneAsync(type);
-                }
+                await typeCollection.InsertManyAsync(types);
             }
         }
     }
-
 }

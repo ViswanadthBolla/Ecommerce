@@ -6,22 +6,17 @@ namespace Catalog.Infrastructure.Data;
 
 public class BrandCotextSeed
 {
-    public static void SeedData(IMongoCollection<ProductBrand> brandCollection)
+    public static async Task SeedData(IMongoCollection<ProductBrand> brandCollection)
     {
-        bool existBrand = brandCollection.Find(b => true).Any();
-        string path = Path.Combine("Data","SeedData","brands.json");
+        bool existBrand = await brandCollection.Find(b => true).AnyAsync();
         if (!existBrand)
         {
-            var brandData = File.ReadAllText(path);
+            var brandData = await File.ReadAllTextAsync("../Catalog.Infrastructure/Data/SeedData/brands.json");
             var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandData);
-            if (brands != null)
+            if (brands != null && brands.Count > 0)
             {
-                foreach (var brand in brands)
-                {
-                    brandCollection.InsertOneAsync(brand);
-                }
+                await brandCollection.InsertManyAsync(brands);
             }
         }
     }
-
 }
